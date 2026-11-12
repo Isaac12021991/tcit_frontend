@@ -1,0 +1,157 @@
+.table-card {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #dbeafe;
+  box-shadow: 0 4px 16px rgba(30, 64, 175, 0.06);
+  overflow: hidden;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.posts-table {
+  width: 100%;
+  background: #ffffff;
+}
+
+th.mat-mdc-header-cell {
+  font-weight: 700;
+  color: #1e3a8a;
+  background: #eff6ff;
+  border-bottom: 2px solid #bfdbfe;
+  padding: 14px 16px;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+}
+
+td.mat-mdc-cell {
+  padding: 16px;
+  vertical-align: top;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.post-row {
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background-color: #f8fafc;
+  }
+}
+
+.post-title {
+  font-weight: 600;
+  font-size: 0.98rem;
+  color: #1e3a8a;
+  margin-bottom: 4px;
+}
+
+.post-uuid {
+  font-family: monospace;
+  font-size: 0.72rem;
+  color: #64748b;
+}
+
+.post-desc {
+  margin: 0;
+  color: #334155;
+  line-height: 1.45;
+  max-width: 280px;
+}
+
+.drive-link {
+  font-size: 0.8rem;
+  border-color: #93c5fd !important;
+  color: #1d4ed8 !important;
+  background-color: #eff6ff;
+}
+
+.muted-text {
+  color: #94a3b8;
+  font-style: italic;
+  font-size: 0.85rem;
+}
+
+.ia-box {
+  background: #f8fafc;
+  border: 1px solid #dbeafe;
+  border-left: 3px solid #2563eb;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 0.82rem;
+  max-width: 460px;
+}
+
+.ia-row {
+  margin-bottom: 4px;
+  color: #334155;
+}
+
+.budget-pill {
+  display: inline-block;
+  margin-left: 4px;
+  background: #dbeafe;
+  color: #1e40af;
+  padding: 1px 8px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.ia-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 6px 0;
+}
+
+.channel-chip {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.74rem;
+  font-weight: 500;
+}
+
+.kpi-chip {
+  background: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.74rem;
+  font-weight: 500;
+}
+
+.privacy-tag {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  color: #1d4ed8;
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+.privacy-tag mat-icon {
+  font-size: 14px;
+  width: 14px;
+  height: 14px;
+  color: #2563eb;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  color: #475569;
+}
+
+.empty-state mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: #3b82f6;
+  margin-bottom: 8px;
+}
+

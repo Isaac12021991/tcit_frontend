@@ -1,0 +1,166 @@
+/* ==========================================================================
+    ESTILOS GLOBALES & TEMA AZUL PROFESIONAL (MODO CLARO) - ANGULAR MATERIAL
+   ========================================================================== */
+
+:root,
+html {
+  color-scheme: light;
+
+  /* Paleta Azul Profesional */
+  --blue-50: #eff6ff;
+  --blue-100: #dbeafe;
+  --blue-200: #bfdbfe;
+  --blue-300: #93c5fd;
+  --blue-400: #60a5fa;
+  --blue-500: #3b82f6;
+  --blue-600: #2563eb;
+  --blue-700: #1d4ed8;
+  --blue-800: #1e40af;
+  --blue-900: #1e3a8a;
+
+  /* Superficies y Texto (Modo Claro Estricto) */
+  --bg-app: #f1f5f9;
+  --bg-surface: #ffffff;
+  --bg-surface-subtle: #f8fafc;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --border-light: #e2e8f0;
+
+  /* Tokens de Angular Material M3 (Sobrescritura a Azul Profesional & Modo Claro) */
+  --mat-app-background-color: var(--bg-app);
+  --mat-app-text-color: var(--text-primary);
+
+  /* Toolbar / Encabezado Principal */
+  --mat-toolbar-container-background-color: var(--blue-800);
+  --mat-toolbar-container-text-color: #ffffff;
+
+  /* Botones Primarios (mat-flat-button / mat-raised-button / mat-stroked-button) */
+  --mdc-filled-button-container-color: var(--blue-700);
+  --mdc-filled-button-label-text-color: #ffffff;
+  --mdc-protected-button-container-color: var(--blue-700);
+  --mdc-protected-button-label-text-color: #ffffff;
+  --mdc-outlined-button-label-text-color: var(--blue-700);
+  --mdc-outlined-button-outline-color: var(--blue-300);
+  --mdc-text-button-label-text-color: var(--blue-700);
+
+  /* Campos de Formulario (mat-form-field) */
+  --mdc-outlined-text-field-caret-color: var(--blue-700);
+  --mdc-outlined-text-field-focus-outline-color: var(--blue-700);
+  --mdc-outlined-text-field-focus-label-text-color: var(--blue-700);
+  --mdc-outlined-text-field-label-text-color: var(--text-secondary);
+  --mdc-outlined-text-field-input-text-color: var(--text-primary);
+  --mdc-outlined-text-field-outline-color: #cbd5e1;
+  --mdc-outlined-text-field-hover-outline-color: var(--blue-500);
+
+  /* Indicadores de Progreso (Spinner & Progress Bar) */
+  --mdc-circular-progress-active-indicator-color: var(--blue-700);
+  --mdc-linear-progress-active-indicator-color: var(--blue-700);
+  --mdc-linear-progress-track-color: var(--blue-100);
+
+  /* Tarjetas y Tablas en Modo Claro */
+  --mdc-elevated-card-container-color: var(--bg-surface);
+  --mdc-outlined-card-container-color: var(--bg-surface);
+  --mdc-outlined-card-outline-color: var(--border-light);
+  --mat-table-background-color: var(--bg-surface);
+  --mat-table-header-headline-color: var(--blue-900);
+  --mat-table-row-item-label-text-color: var(--text-primary);
+  --mat-table-row-item-outline-color: var(--border-light);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   ACENTOS VISUALES: ENCABEZADOS Y BOTONES PRINCIPALES EN AZUL
+   ========================================================================== */
+
+/* Encabezado / Barra de Navegación */
+mat-toolbar.mat-primary,
+mat-toolbar[color="primary"],
+.app-toolbar {
+  background: linear-gradient(135deg, var(--blue-900) 0%, var(--blue-700) 55%, var(--blue-600) 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(30, 64, 175, 0.22);
+}
+
+mat-toolbar.mat-primary mat-icon,
+mat-toolbar[color="primary"] mat-icon,
+.app-toolbar mat-icon {
+  color: #ffffff !important;
+}
+
+/* Botones Principales: mat-raised-button y mat-flat-button */
+button[mat-raised-button].mat-primary,
+button[mat-raised-button][color="primary"],
+button[mat-flat-button].mat-primary,
+button[mat-flat-button][color="primary"],
+.mat-mdc-raised-button.mat-primary,
+.mat-mdc-unelevated-button.mat-primary {
+  --mdc-protected-button-container-color: var(--blue-700);
+  --mdc-protected-button-label-text-color: #ffffff;
+  --mdc-filled-button-container-color: var(--blue-700);
+  --mdc-filled-button-label-text-color: #ffffff;
+  background-color: var(--blue-700) !important;
+  color: #ffffff !important;
+  font-weight: 500;
+  letter-spacing: 0.015em;
+  box-shadow: 0 3px 10px rgba(29, 78, 216, 0.25);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+
+  &:hover:not(:disabled) {
+    background-color: var(--blue-800) !important;
+    box-shadow: 0 6px 16px rgba(30, 64, 175, 0.32);
+    transform: translateY(-1px);
+  }
+
+  &:active:not(:disabled) {
+    background-color: var(--blue-900) !important;
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    background-color: #cbd5e1 !important;
+    color: #64748b !important;
+    box-shadow: none !important;
+  }
+}
+
+/* Botones Secundarios con Borde Azul (mat-stroked-button) */
+button[mat-stroked-button].mat-primary,
+button[mat-stroked-button][color="primary"],
+a[mat-stroked-button].mat-primary,
+a[mat-stroked-button][color="primary"],
+.mat-mdc-outlined-button.mat-primary {
+  --mdc-outlined-button-label-text-color: var(--blue-700);
+  --mdc-outlined-button-outline-color: var(--blue-300);
+  color: var(--blue-700) !important;
+  border-color: var(--blue-300) !important;
+  background-color: var(--blue-50);
+  font-weight: 500;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background-color: var(--blue-100);
+    border-color: var(--blue-600) !important;
+  }
+}
+
+/* Íconos con color="primary" */
+.mat-icon.mat-primary,
+mat-icon[color="primary"] {
+  color: var(--blue-700) !important;
+}

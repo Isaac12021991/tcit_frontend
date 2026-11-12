@@ -1,0 +1,31 @@
+<div class="filter-bar">
+  <mat-form-field appearance="outline" class="filter-field" subscriptSizing="dynamic" color="primary">
+    <mat-label>Filter campaigns locally by name</mat-label>
+    <mat-icon matPrefix color="primary">search</mat-icon>
+    <input
+      matInput
+      type="text"
+      [ngModel]="terminoBusqueda"
+      (ngModelChange)="emitirCambioFiltro($event)"
+      placeholder="Type the post name (100% client-side in-memory filtering)..."
+    />
+    @if (terminoBusqueda) {
+      <button
+        matSuffix
+        mat-icon-button
+        color="primary"
+        aria-label="Clear filter"
+        (click)="emitirCambioFiltro('')"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    }
+  </mat-form-field>
+
+  <div class="filter-stats">
+    <span class="badge-local">
+      <mat-icon>bolt</mat-icon>
+      Local Filter Active ({{ totalFiltrados }} of {{ totalRegistros }} posts)
+    </span>
+  </div>
+</div>

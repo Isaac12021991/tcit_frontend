@@ -1,0 +1,95 @@
+<div class="form-page-wrapper">
+  <mat-card class="form-card" appearance="outlined">
+    <mat-card-header>
+      <mat-card-title class="card-title">
+        <mat-icon color="primary">campaign</mat-icon>
+        <span>{{ modoEdicion ? 'Edit Campaign / Brief' : 'New Campaign / Brief' }}</span>
+      </mat-card-title>
+      <mat-card-subtitle>
+        Fill in the campaign name, description, campaign brief, and attach a file for processing
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="formularioPost" (ngSubmit)="guardarPost()" class="post-form">
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Campaign Name</mat-label>
+            <input matInput formControlName="nombre" placeholder="e.g. Q4 Product Launch LATAM" />
+            <mat-icon matSuffix>title</mat-icon>
+            <mat-hint align="end">{{ formularioPost.controls.nombre.value.length }} / 300</mat-hint>
+            @if (formularioPost.controls.nombre.hasError('required')) {
+            <mat-error>Campaign name is required</mat-error>
+            }
+            @if (formularioPost.controls.nombre.hasError('maxlength')) {
+            <mat-error>Campaign name cannot exceed 300 characters</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Description</mat-label>
+            <textarea matInput rows="3" formControlName="descripcion"
+              placeholder="General campaign overview..."></textarea>
+            <mat-hint align="end">{{ formularioPost.controls.descripcion.value.length }} / 300</mat-hint>
+            @if (formularioPost.controls.descripcion.hasError('required')) {
+            <mat-error>Description is required</mat-error>
+            }
+            @if (formularioPost.controls.descripcion.hasError('maxlength')) {
+            <mat-error>Description cannot exceed 300 characters</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Campaign Brief</mat-label>
+            <textarea matInput rows="5" formControlName="brief"
+              placeholder="Detail the objective, target audience, suggested channels, tone of voice, KPIs, and estimated budget..."></textarea>
+            <mat-hint align="end">{{ formularioPost.controls.brief.value.length }} / 300</mat-hint>
+            @if (formularioPost.controls.brief.hasError('required')) {
+            <mat-error>Campaign brief is required</mat-error>
+            }
+            @if (formularioPost.controls.brief.hasError('maxlength')) {
+            <mat-error>Campaign brief cannot exceed 300 characters</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="drive-section">
+          <input #fileInput type="file" hidden (change)="alSeleccionarArchivo($event)"
+            accept=".pdf,.doc,.docx,.txt,.png,.jpg,.jpeg" />
+          <button type="button" mat-stroked-button color="primary" (click)="fileInput.click()"
+            [disabled]="leyendoArchivo || procesandoGuardado">
+            <mat-icon>attach_file</mat-icon>
+            <span>{{ leyendoArchivo ? 'Converting to Base64...' : 'Attachment' }}</span>
+          </button>
+
+          @if (nombreArchivoSeleccionado) {
+          <span class="uploaded-badge">
+            <mat-icon>check_circle</mat-icon>
+            {{ nombreArchivoSeleccionado }} (ready in Base64)
+          </span>
+          }
+        </div>
+
+        @if (procesandoGuardado || leyendoArchivo) {
+        <mat-progress-bar mode="indeterminate" class="progress-bar"></mat-progress-bar>
+        }
+
+        <div class="form-actions">
+          <a mat-stroked-button routerLink="/posts" [class.disabled-link]="procesandoGuardado">
+            Cancel
+          </a>
+
+          <button type="submit" mat-flat-button color="primary" class="submit-btn"
+            [disabled]="formularioPost.invalid || procesandoGuardado || leyendoArchivo">
+            <mat-icon>save</mat-icon>
+            <span>{{ procesandoGuardado ? 'Saving...' : 'Save' }}</span>
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
