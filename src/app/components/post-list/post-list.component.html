@@ -58,6 +58,11 @@
             <th mat-header-cell *matHeaderCellDef>Description / Brief</th>
             <td mat-cell *matCellDef="let post">
               <p class="post-desc">{{ post.descripcion }}</p>
+              @if (post.brief && post.brief !== post.descripcion) {
+                <p class="post-desc" style="margin-top: 6px; font-size: 0.85rem;">
+                  <strong>Brief:</strong> {{ post.brief }}
+                </p>
+              }
             </td>
           </ng-container>
 

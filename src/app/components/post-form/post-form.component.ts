@@ -106,6 +106,7 @@ export class PostFormComponent implements OnInit {
   private readonly snackBar = inject(MatSnackBar);
 
   procesandoGuardado = false;
+  cargandoDatosEdicion = false;
   leyendoArchivo = false;
   nombreArchivoSeleccionado = '';
   modoEdicion = false;
@@ -119,19 +120,50 @@ export class PostFormComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    const idParam = this.route.snapshot.paramMap.get('id');
-    if (idParam) {
+    this.route.paramMap.subscribe((params) => {
+      const idParam = params.get('id');
+      if (!idParam) {
+        this.modoEdicion = false;
+        this.postIdEdicion = null;
+        return;
+      }
+
       this.modoEdicion = true;
       this.postIdEdicion = idParam;
-      const estadoNav = history.state as { post?: Post & { brief?: string } };
+
+      const estadoNav = history.state as { post?: Partial<Post> };
       if (estadoNav?.post) {
-        this.formularioPost.patchValue({
-          nombre: estadoNav.post.nombre,
-          descripcion: estadoNav.post.descripcion,
-          brief: estadoNav.post.brief ?? '',
-          adjunto: estadoNav.post.adjunto
-        });
+        this.cargarPostEnFormulario(estadoNav.post);
       }
+
+      this.cargandoDatosEdicion = true;
+      this.postService.obtenerPostPorId(idParam).subscribe({
+        next: (postRemoto) => {
+          this.cargandoDatosEdicion = false;
+          if (postRemoto) {
+            this.cargarPostEnFormulario(postRemoto);
+          }
+        },
+        error: () => {
+          this.cargandoDatosEdicion = false;
+        }
+      });
+    });
+  }
+
+  private cargarPostEnFormulario(postRaw: Partial<Post>): void {
+    const postNormalizado = this.postService.normalizarPostParaFormulario(postRaw);
+
+    this.formularioPost.patchValue({
+      nombre: postNormalizado.nombre,
+      descripcion: postNormalizado.descripcion,
+      brief: postNormalizado.brief ?? postNormalizado.descripcion,
+      adjunto: postNormalizado.adjunto
+    });
+
+    if (postNormalizado.adjunto) {
+      this.nombreArchivoSeleccionado =
+        postNormalizado.adjuntoNombre || 'Current attachment loaded';
     }
   }
 
@@ -170,7 +202,8 @@ export class PostFormComponent implements OnInit {
       nombre: valores.nombre.trim(),
       descripcion: valores.descripcion.trim(),
       brief: valores.brief.trim(),
-      adjunto: valores.adjunto
+      adjunto: valores.adjunto,
+      adjuntoNombre: this.nombreArchivoSeleccionado || undefined
     };
 
     this.procesandoGuardado = true;
@@ -183,12 +216,12 @@ export class PostFormComponent implements OnInit {
     peticion$.subscribe({
       next: () => {
         this.procesandoGuardado = false;
-        this.snackBar.open('Campaña guardada exitosamente.', 'OK', { duration: 3000 });
+        this.snackBar.open('Campaign saved successfully.', 'OK', { duration: 3000 });
         this.router.navigate(['/posts']);
       },
       error: () => {
         this.procesandoGuardado = false;
-        this.snackBar.open('Error al guardar el post en el servidor.', 'Cerrar', {
+        this.snackBar.open('Error saving the campaign on the server.', 'Close', {
           duration: 4000
         });
       }

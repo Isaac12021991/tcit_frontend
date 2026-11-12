@@ -195,16 +195,21 @@ export class PostListComponent implements OnInit {
 
   // Llamada única a GET /posts durante el ciclo de vida ngOnInit de la vista
   ngOnInit(): void {
+    this.cargarPostsOrdenados();
+  }
+
+  cargarPostsOrdenados(): void {
     this.cargandoLista = true;
     this.postService.listarPosts().subscribe({
       next: (posts) => {
-        this.todosLosPosts = Array.isArray(posts) ? posts : [];
+        const lista = Array.isArray(posts) ? posts : [];
+        this.todosLosPosts = this.postService.ordenarPostsDescendente(lista);
         this.aplicarFiltroLocal(this.terminoFiltro);
         this.cargandoLista = false;
       },
       error: () => {
         this.cargandoLista = false;
-        this.snackBar.open('Error al cargar los posts desde el servidor.', 'Cerrar', {
+        this.snackBar.open('Error loading campaigns from the server.', 'Close', {
           duration: 4000
         });
       }
@@ -214,31 +219,37 @@ export class PostListComponent implements OnInit {
   aplicarFiltroLocal(termino: string): void {
     this.terminoFiltro = termino;
     const criterio = termino.trim().toLowerCase();
+    const baseOrdenada = this.postService.ordenarPostsDescendente(this.todosLosPosts);
     if (!criterio) {
-      this.postsFiltrados = [...this.todosLosPosts];
+      this.postsFiltrados = [...baseOrdenada];
       return;
     }
-    this.postsFiltrados = this.todosLosPosts.filter((post) =>
+    this.postsFiltrados = baseOrdenada.filter((post) =>
       post.nombre.toLowerCase().includes(criterio)
     );
   }
 
   editarPost(post: Post): void {
-    this.router.navigate(['/posts', post.id, 'edit'], { state: { post } });
+    const postCompleto = this.postService.normalizarPostParaFormulario(post);
+    this.router.navigate(['/posts', postCompleto.id, 'edit'], {
+      state: { post: postCompleto }
+    });
   }
 
   eliminarPost(postId: string): void {
     this.eliminandoId = postId;
     this.postService.eliminarPost(postId).subscribe({
       next: () => {
-        this.todosLosPosts = this.todosLosPosts.filter((p) => p.id !== postId);
+        this.todosLosPosts = this.postService.ordenarPostsDescendente(
+          this.todosLosPosts.filter((p) => p.id !== postId)
+        );
         this.aplicarFiltroLocal(this.terminoFiltro);
         this.eliminandoId = null;
-        this.snackBar.open('Post eliminado correctamente.', 'OK', { duration: 3000 });
+        this.snackBar.open('Campaign deleted successfully.', 'OK', { duration: 3000 });
       },
       error: () => {
         this.eliminandoId = null;
-        this.snackBar.open('No se pudo eliminar el post.', 'Cerrar', { duration: 4000 });
+        this.snackBar.open('Could not delete the campaign.', 'Close', { duration: 4000 });
       }
     });
   }
